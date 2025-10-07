@@ -1,0 +1,18 @@
+name: feed-runner
+on:
+  workflow_call:
+    inputs:
+      script: { required: true, type: string }
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install deps
+        run: |
+          if [ -f scripts/requirements.txt ]; then pip install -r scripts/requirements.txt; \
+          elif [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Execute
+        run: python ${{ inputs.script }}
