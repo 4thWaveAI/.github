@@ -11,6 +11,7 @@ Open-core **Automation OS**, connectors, templates, and real-time feeds.
 ```yaml
 jobs:
   task:
-    uses: 4thWaveAI/.github/.github/workflows/feed-runner.yml@main
+    uses: 4thWaveAI/.github/workflows/feed-runner.yml@main
     with:
       script: scripts/update_feeds.py
+      requirements_path: path/to/your/requirements.txt

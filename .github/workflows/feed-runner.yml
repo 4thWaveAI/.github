@@ -3,6 +3,7 @@ on:
   workflow_call:
     inputs:
       script: { required: true, type: string }
+      requirements_path: { required: false, type: string }
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -12,7 +13,8 @@ jobs:
         with: { python-version: "3.11" }
       - name: Install deps
         run: |
-          if [ -f scripts/requirements.txt ]; then pip install -r scripts/requirements.txt; \
+          if [ -n "${{ inputs.requirements_path }}" ]; then pip install -r ${{ inputs.requirements_path }}; \
+          elif [ -f scripts/requirements.txt ]; then pip install -r scripts/requirements.txt; \
           elif [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Execute
         run: python ${{ inputs.script }}
